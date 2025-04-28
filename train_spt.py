@@ -243,7 +243,19 @@ if __name__ == "__main__":
     
     classifier = nn.Sequential(backbone, projector).cuda()
     state_dict = torch.load(args.pretrained_model_path, map_location='cpu')
-    classifier.load_state_dict(state_dict)
+
+    state_dict = torch.load(args.pretrained_model_path)
+    if isinstance(classifier, torch.nn.Sequential):
+        new_state_dict = {}
+        for k, v in state_dict.items():
+            if not k.startswith('0.'):
+                new_state_dict[f'0.{k}'] = v
+            else:
+                new_state_dict[k] = v
+        state_dict = new_state_dict
+
+    classifier.load_state_dict(state_dict, strict=False)
+    #classifier.load_state_dict(state_dict)
     model = nn.Sequential(prompter, classifier).cuda()
 
     # ----------------------
