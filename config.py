@@ -1,6 +1,7 @@
 # -----------------
 # DATASET ROOTS
 # -----------------
+food101_root = '/disk/datasets'
 cifar_10_root = '/disk/datasets'
 cifar_100_root = '/disk/datasets'
 herbarium_dataroot = '/disk/datasets/herbarium_19'
